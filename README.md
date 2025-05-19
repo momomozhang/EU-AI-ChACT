@@ -15,37 +15,14 @@ The whole thing runs on AWS Lambda, so it's cheap to host and scales automatical
 Tech professionals and general people interested in GenAI technology but unfamiliar with the EU AI Act.
 It provides accessible first glimpse of legal regulations, helping users understand how the EU AI Act might relate to GenAI development and deployment. However, users should consult legal professionals for commercial products or specific project advice.
 
-## Tech used
+## Technical Process Flow
+1. Document Storage: S3
+2. Text Extraction: AWS Textract + Lambda
+3. Document Chunking: Python + Lambda
+4. Embedding Generation: Amazon Bedrock
+5. Vector Storage: Amazon OpenSearch Service
+6. Metadata Management: Amazon DynamoDB
 
-**Backend stuff**: Python, AWS Lambda, API Gateway
-**AI parts**: Claude for chat, vector embeddings for search
-**Infrastructure**: CDK to set everything up
-**Vector storage**: TBD (probably Pinecone or OpenSearch)
-
-## Status
-
-Still building this. It's a portfolio project to learn about:
-- RAG systems
-- Document chunking and embeddings
-- AWS serverless architecture
-- CDK for infrastructure
-
-Right now I have the basic structure set up. Next steps are getting the document processing working, then the chat interface.
-
-## Why the EU AI Act?
-
-It's a complex legal document that's perfect for testing RAG systems. Plus it's actually useful - the Act affects lots of businesses but isn't easy to understand.
-
-## License
-
-MIT
-
-## WIP:
-# Document Ingestion: 
-the file format is PDF. After consideration, I chose to work with PyMuPDF as the parsing library for the following reasons:
-1. It can handle complex layouts and formatting
-2. It is able to preserve formatting that indicates hierarchy
-3. Fast performance
 
 # Chunking strategy: 
 
@@ -61,18 +38,7 @@ Therefore, I decided on choosing the hierarchical chunking with semantic boundar
 - special handling for annexes as separate chunks with parent references to the articles
 - preserve structural hierachy: chapter -> section -> article -> paragraph
 
-# Document Processing Steps:
 
-1. Extract PDF content: Use PyMuPDF to pull text
-2. Parse document structure - Find articles, sections, chapters, and those chunky annexes at the end
-3. Break into chunks - Split by articles mostly, but break up the really long ones at paragraph boundaries
-4. Add metadata - Tag each chunk with its location, related articles, and key concepts
-5. Create embeddings - Convert everything to vectors and stuff them in one database
-6. Build search index - Set it up so you can find both specific details and general concepts
+## License
 
-# File Structure
-/src/chact/
-├── pdf_extractor.py      # class PDFExtractor
-├── structure_analyzer.py # class StructureAnalyzer
-├── document_segmenter.py # class DocumentSegmenter
-└── document_pipeline.py # class DocumentPipeline
+MIT
