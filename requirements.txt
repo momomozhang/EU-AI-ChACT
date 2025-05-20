@@ -1,7 +1,0 @@
-pymupdf==1.22.3
-langchain==0.0.267
-transformers==4.31.0
-sentence-transformers==2.2.2
-boto3==1.28.40
-faiss-cpu==1.7.4
-python-dotenv==1.0.0
