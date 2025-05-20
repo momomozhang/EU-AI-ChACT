@@ -16,13 +16,7 @@ Tech professionals and general people interested in GenAI technology but unfamil
 It provides accessible first glimpse of legal regulations, helping users understand how the EU AI Act might relate to GenAI development and deployment. However, users should consult legal professionals for commercial products or specific project advice.
 
 ## Technical Process Flow
-1. Document Storage: S3
-2. Text Extraction: AWS Textract + Lambda
-3. Document Chunking: Python + Lambda
-4. Embedding Generation: Amazon Bedrock
-5. Vector Storage: Amazon OpenSearch Service
-6. Metadata Management: Amazon DynamoDB
-
+First I tested with AWS Textract, but it's too expensive. Then I played around with PyMuPDF. Now I decided to go with LangChain. It's frustrating to go in circles without having the project moving forward, but it's my first real world project. Be patient.
 
 # Chunking strategy: 
 
@@ -33,10 +27,12 @@ The EU AI Act is a complex legal document with:
 - cross references between articals
 
 Therefore, I decided on choosing the hierarchical chunking with semantic boundaries. It allows both detailed provisions while preserving their broader context.
-- primary chunks: complete articles (ca 500 - 1500 tokens)
-- child chunks: for articles exceeding 1000 tokens - paragraphs / sub-sections
-- special handling for annexes as separate chunks with parent references to the articles
-- preserve structural hierachy: chapter -> section -> article -> paragraph
+
+## Chunking Considerations:
+- Semantic Coherence: Each chunk should be a complete thought or section
+- Size Management: Chunks need to fit within Claude's context window
+- Preserving Hierarchy: Need to maintain parent-child relationships
+- Metadata: Store information about each chunk's source and context
 
 
 ## License
